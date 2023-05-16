@@ -99,3 +99,23 @@
     -   destructuring state
 -   http errors
 -   pattern stateMachine with status['idle','pending','rejected','resolved']
+
+# Module 4
+
+### Less 1
+
+-   useState
+-   useState nothing save state
+-   useState one State = one useState
+-   useState convert class to hooks
+
+-   useEffect
+-   useEffect first render <Modal/>
+-   useEffect every render <LoginForm/>
+-   useEffect clear after render <Modal/>
+
+-   useEffect first render <ToDo/>
+-   useEffect update on any change <ToDo/>
+
+-   edit class to huk <ContentInfo/>
+-   if return <ContentInfo/>
