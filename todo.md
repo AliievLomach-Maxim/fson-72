@@ -119,3 +119,25 @@
 
 -   edit class to huk <ContentInfo/>
 -   if return <ContentInfo/>
+
+### Less 2
+
+-   refactor with toast <ToDo/>
+
+-   useReducer <Counter/>
+-   action.type
+-   action.payload
+-   dispatch
+
+-   useMemo <TestUseMemo/>
+-   complexCompute <TestUseMemo/>
+-   useEffect vs useMemo <TestUseMemo/>
+
+-   useCallback <TestUseMemo/>
+
+-   async with useEffect
+
+-   useContext
+-   Provider
+-   toggleState
+-   useAlert

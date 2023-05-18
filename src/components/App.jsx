@@ -1,15 +1,16 @@
 // import ToDoList from './ToDoList/ToDoList'
 import { useState, useEffect } from 'react'
 import Modal from './Modal/Modal'
-import Counter from './Counter/Counter'
+// import Counter from './Counter/Counter'
 import Header from './Header/Header'
-import { Component } from 'react'
+// import { Component } from 'react'
 // import Parent from './Parent/Parent'
 import FormLogin from './FormLogin/FormLogin'
-import Search from './Search/Search'
-import ContentInfo from './ContentInfo/ContentInfo'
+// import Search from './Search/Search'
+// import ContentInfo from './ContentInfo/ContentInfo'
 
 import React from 'react'
+import TestUseMemo from './TestUseMemo/TestUseMemo'
 
 const App = () => {
 	const [isShowModal, setIsShowModal] = useState(false)
@@ -58,13 +59,14 @@ const App = () => {
 		<div className='container'>
 			<Header open={openModal} />
 			{/* <Counter /> */}
+			<TestUseMemo />
 			{/* <ToDoList /> */}
 
 			{/* <Parent close={closeModal} isOpen={state.isShowModal}>
 					Some
 				</Parent> */}
-			<Search handleSearch={handleSearch} />
-			<ContentInfo searchText={searchText} />
+			{/* <Search handleSearch={handleSearch} />
+			<ContentInfo searchText={searchText} /> */}
 
 			{isShowModal && (
 				<Modal close={closeModal}>
