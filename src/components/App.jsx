@@ -53,6 +53,17 @@ const App = () => {
 		console.log(newUser)
 	}
 
+	const someRenderFn = (data) => {
+		createUser()
+
+		return (
+			<li>
+				{data}
+				{searchText}
+			</li>
+		)
+	}
+
 	const handleSearch = (searchText) => setSearchText(searchText)
 
 	return (
@@ -69,7 +80,7 @@ const App = () => {
 			<ContentInfo searchText={searchText} /> */}
 
 			{isShowModal && (
-				<Modal close={closeModal}>
+				<Modal close={closeModal} renderFn={someRenderFn}>
 					<FormLogin close={closeModal} createUser={createUser} />
 					{/* Hello */}
 				</Modal>
