@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const ToDo = ({ todo, check, handleDelete }) => {
 	function handleCheck() {
@@ -14,7 +15,7 @@ const ToDo = ({ todo, check, handleDelete }) => {
 						onChange={handleCheck}
 						checked={todo.completed}
 					/>
-					{todo.title}
+					<Link to={todo.id}>{todo.title}</Link>
 				</div>
 				<div className='col'>
 					<button
