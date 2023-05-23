@@ -141,3 +141,16 @@
 -   Provider
 -   toggleState
 -   useAlert
+
+## Module 5
+
+### Less 1
+
+-   BrowserRouter <Index.js/>
+-   Routes & Route <App.js/>
+-   Link to <Header/>
+-   Outlet & nested routes <HomePage/>
+-   add <Layout/>
+-   use index
+-   PageDetails
+-   useParams
