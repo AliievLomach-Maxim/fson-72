@@ -15,16 +15,10 @@ const ToDoList = () => {
 	const [isDeleted, setIsDeleted] = useState(false)
 	const [searchParams, setSearchParams] = useSearchParams()
 
-	// const filter = useMemo(
-	// 	() => searchParams.get('filter') ?? '',
-	// 	[searchParams]
-	// )
-	const { filter, page } = useMemo(
+	const { filter } = useMemo(
 		() => Object.fromEntries([...searchParams]),
 		[searchParams]
 	)
-	// console.log('page :>> ', page)
-	// console.log('searchParams :>> ', Object.fromEntries([...searchParams]))
 
 	useEffect(() => {
 		const localData = localStorage.getItem('todo')
