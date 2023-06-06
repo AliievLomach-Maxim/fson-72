@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 
 function complexCompute(number) {
-	console.log('complex :>> ')
+	// console.log('complex :>> ')
 	// for (let i = 0; i < 1000000000; i++) {}
 	return number * 2
 }
@@ -13,7 +13,7 @@ const TestUseMemo = () => {
 	const styled = { color: colored ? 'red' : 'white' }
 
 	// const computed = complexCompute(total)
-	const computed = useCallback(() => {
+	const computed = useMemo(() => {
 		return complexCompute(total)
 	}, [total])
 
@@ -31,7 +31,7 @@ const TestUseMemo = () => {
 					className='card-text  text-center'
 					style={{ fontSize: '80px' }}
 				>
-					{computed()}
+					{computed}
 				</p>
 				<div className='d-flex justify-content-center px-5'>
 					<button

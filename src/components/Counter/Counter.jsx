@@ -1,48 +1,57 @@
-// // import { Component, PureComponent } from 'react'
 // import { useReducer, useState } from 'react'
 
-// const reducer = (state, action) => {
-// 	if (action.type === 'increment') return state + action.payload
-// 	if (action.type === 'decrement') return state - action.payload
-// }
-// const reducer2 = (state, action) => {
-// 	if (action.type === 'createName')
+// // function reducer(state, action) {
+// // 	if (action.type === 'increment') {
+// // 		return state + action.payload
+// // 	} else if (action.type === 'decrement') {
+// // 		return state - action.payload
+// // 	}
+// // }
+
+// function reducer(state, action) {
+// 	if (action.type === 'setName') {
 // 		return {
 // 			...state,
 // 			name: action.payload,
 // 		}
-// 	if (action.type === 'setAge')
+// 	} else if (action.type === 'setAge') {
 // 		return {
 // 			...state,
 // 			age: action.payload,
 // 		}
-// 	if (action.type === 'createAllInfoUser')
+// 	} else if (action.type === 'createInfo') {
 // 		return {
 // 			...state,
-// 			age: action.payload.b,
-// 			name: action.payload.a,
-// 			isDev: action.payload.c,
+// 			name: action.payload[0],
+// 			age: action.payload[1],
+// 			isDev: action.payload[2],
 // 		}
+// 	}
 // }
 
 // const Counter = () => {
-// 	// const [total, setTotal] = useState(0)
-// 	const [total, setTotal] = useReducer(reducer, 0)
-// 	const [user, setUser] = useReducer(reducer, {
+// 	// const [userState, dispatch] = useReducer(reducer, {
+// 	// 	name: '',
+// 	// 	age: 0,
+// 	// 	items: [],
+// 	// 	isDev: true,
+// 	// })
+
+// 	// dispatch({ type: 'setName', payload: 'Alex' })
+// 	// dispatch({ type: 'setAge', payload: 30 })
+// 	// dispatch({ type: 'createInfo', payload: ['Alex', 30, true] })
+
+// 	const [user, setUser] = useState({
 // 		name: '',
 // 		age: 0,
+// 		items: [],
 // 		isDev: true,
 // 	})
-// 	const obj = { a: 'Alex', b: 30, c: false }
-// 	setUser({ type: 'createName', payload: 'Alex' })
-// 	setUser({ type: 'setAge', payload: 30 })
-// 	setUser({ type: 'createAllInfoUser', payload: obj })
 
-// 	const handleClickIncrement = () =>
-// 		setTotal({ type: 'increment', payload: 1 })
+// 	setUser((prev) => ({ ...prev, name: 'Alex' }))
+// 	setUser((prev) => ({ ...prev, age: 30 }))
+// 	setUser((prev) => ({ ...prev, name: 'Alex', age: 30, isDev: false }))
 
-// 	const handleClickDecrement = () =>
-// 		setTotal({ type: 'decrement', payload: 1 })
 // 	return (
 // 		<div className='position-absolute top-50 start-50 translate-middle'>
 // 			<div
@@ -81,16 +90,9 @@
 
 // // class Button extends PureComponent {
 // // 	// shouldComponentUpdate(nextProps, nextState) {
-// // 	// 	if (
-// // 	// 		nextProps.handleClickIncrement !== this.props.handleClickIncrement
-// // 	// 	) {
-// // 	// 		return true
-// // 	// 	} else if (nextProps.user !== this.props.user) {
-// // 	// 		return true
-// // 	// 	}
+// // 	// 	if (nextProps.user.name !== this.props.user.name) return true
 // // 	// 	return false
 // // 	// }
-
 // // 	render() {
 // // 		console.log('render BTN')
 // // 		return (
@@ -119,42 +121,40 @@
 // // 	render() {
 // // 		console.log('Render')
 // // 		return (
-// // <div className='position-absolute top-50 start-50 translate-middle'>
-// // 	<div
-// // 		className='card bg-dark text-white '
-// // 		style={{ width: '600px' }}
-// // 	>
-// // 		<div className='card-body'>
-// // 			<h5 className='card-title text-center fs-1'>Counter</h5>
-// // 			<p
-// // 				className='card-text  text-center'
-// // 				style={{ fontSize: '80px' }}
-// // 			>
-// // 				{this.state.total}
-// // 			</p>
-// // 			<div className='d-flex justify-content-center px-5'>
-// // 				{/* <button
-// // 					onClick={this.handleClickIncrement}
-// // 					className='btn btn-outline-success me-5'
+// // 			<div className='position-absolute top-50 start-50 translate-middle'>
+// // 				<div
+// // 					className='card bg-dark text-white '
+// // 					style={{ width: '600px' }}
 // // 				>
-// // 					<i className='bi bi-plus-circle fs-1'></i>
-// // 				</button> */}
-// // 				<Button
-// // 					user={{
-// // 						name: 'Alex',
-// // 					}}
-// // 					handleClickIncrement={this.handleClickIncrement}
-// // 				/>
-// // 				<button
-// // 					className='btn  btn-outline-danger ms-5'
-// // 					onClick={this.handleClickDecrement}
-// // 				>
-// // 					<i className='bi bi-dash-circle fs-1'></i>
-// // 				</button>
+// // 					<div className='card-body'>
+// // 						<h5 className='card-title text-center fs-1'>Counter</h5>
+// // 						<p
+// // 							className='card-text  text-center'
+// // 							style={{ fontSize: '80px' }}
+// // 						>
+// // 							{this.state.total}
+// // 						</p>
+// // 						<div className='d-flex justify-content-center px-5'>
+// // 							{/* <button
+// // 								onClick={this.handleClickIncrement}
+// // 								className='btn btn-outline-success me-5'
+// // 							>
+// // 								<i className='bi bi-plus-circle fs-1'></i>
+// // 							</button> */}
+// // 							<Button
+// // 								user={{ name: 'Alex' }}
+// // 								handleClickIncrement={this.handleClickIncrement}
+// // 							/>
+// // 							<button
+// // 								className='btn  btn-outline-danger ms-5'
+// // 								onClick={this.handleClickDecrement}
+// // 							>
+// // 								<i className='bi bi-dash-circle fs-1'></i>
+// // 							</button>
+// // 						</div>
+// // 					</div>
+// // 				</div>
 // // 			</div>
-// // 		</div>
-// // 	</div>
-// // </div>
 // // 		)
 // // 	}
 // // }
