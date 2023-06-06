@@ -1,29 +1,33 @@
 import { useEffect } from 'react'
 import React from 'react'
 
-const Modal = ({ children, close, renderFn }) => {
+const Modal = ({ children, close }) => {
+	// componentDidMount() {
+	// 	document.addEventListener('keydown', this.handleESC)
+	// }
+
 	useEffect(() => {
-		const handlePressESC = (e) => {
-			console.log('press')
-			if (e.code === 'Escape') close()
+		const handleESC = (e) => {
+			console.log('esc')
+			if (e.code === 'Escape') {
+				close()
+			}
 		}
-		document.addEventListener('keydown', handlePressESC)
+		document.addEventListener('keydown', handleESC)
 		return () => {
-			document.removeEventListener('keydown', handlePressESC)
+			document.removeEventListener('keydown', handleESC)
 		}
 	}, [close])
-	const handleClick = (e) => {
-		console.log('e.currentTarget :>> ', e.currentTarget)
-		console.log('e.target :>> ', e.target)
-		if (e.currentTarget === e.target) close()
-	}
+
+	// componentWillUnmount() {
+	// 	document.removeEventListener('keydown', this.handleESC)
+	// }
+
 	return (
 		<div
 			className='modal fade show'
 			style={{ display: 'block', backdropFilter: 'blur(5px)' }}
-			onClick={handleClick}
 		>
-			{renderFn('Alex')}
 			<div className='modal-dialog'>
 				<div className='modal-content'>
 					<div className='modal-header'>
@@ -43,3 +47,72 @@ const Modal = ({ children, close, renderFn }) => {
 }
 
 export default Modal
+
+// class Modal extends Component {
+// 	componentDidMount() {
+// 		document.addEventListener('keydown', this.handleESC)
+// 	}
+
+// 	componentWillUnmount() {
+// 		document.removeEventListener('keydown', this.handleESC)
+// 	}
+
+// 	handleESC = (e) => {
+// 		console.log('esc')
+// 		if (e.code === 'Escape') {
+// 			this.props.close()
+// 		}
+// 	}
+
+// 	render() {
+// 		const { children, close } = this.props
+// 		return (
+// 			<div
+// 				className='modal fade show'
+// 				style={{ display: 'block', backdropFilter: 'blur(5px)' }}
+// 			>
+// 				<div className='modal-dialog'>
+// 					<div className='modal-content'>
+// 						<div className='modal-header'>
+// 							<h5 className='modal-title'> Modal</h5>
+// 							<button
+// 								onClick={close}
+// 								type='button'
+// 								className='btn-close'
+// 								aria-label='Close'
+// 							></button>
+// 						</div>
+// 						<div className='modal-body'>{children}</div>
+// 					</div>
+// 				</div>
+// 			</div>
+// 		)
+// 	}
+// }
+
+// export default Modal
+// // const Modal = ({ children, close }) => {
+// // 	return (
+// // 		<div
+// // 			className='modal fade show'
+// // 			style={{ display: 'block', backdropFilter: 'blur(5px)' }}
+// // 		>
+// // 			<div className='modal-dialog'>
+// // 				<div className='modal-content'>
+// // 					<div className='modal-header'>
+// // 						<h5 className='modal-title'> Modal</h5>
+// // 						<button
+// // 							onClick={close}
+// // 							type='button'
+// // 							className='btn-close'
+// // 							aria-label='Close'
+// // 						></button>
+// // 					</div>
+// // 					<div className='modal-body'>{children}</div>
+// // 				</div>
+// // 			</div>
+// // 		</div>
+// // 	)
+// // }
+
+// // export default Modal

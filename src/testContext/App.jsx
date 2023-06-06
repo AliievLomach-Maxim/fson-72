@@ -1,7 +1,7 @@
-// import { createContext, useState } from 'react'
+import { createContext, useState } from 'react'
 import Alert from './Alert'
-import Context from './Context/Context'
 import Main from './Main'
+import Context from './Context/Context'
 
 // export const ToggleContext = createContext()
 
@@ -12,7 +12,7 @@ const App = () => {
 			{/* <ToggleContext.Provider
 				value={{
 					toggleValue: toggle,
-					toggleFn: () => setToggle((prev) => !prev),
+					setToggleFn: () => setToggle((prev) => !prev),
 				}}
 			> */}
 			<Context>

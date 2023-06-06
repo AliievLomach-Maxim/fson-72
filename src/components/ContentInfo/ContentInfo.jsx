@@ -1,99 +1,90 @@
 import { Component } from 'react'
-import { getSearchNews } from '../../api/api'
-import ErrorCard from './ErrorCard'
+import { getSearchNews } from '../../api/getSearchNews'
 import Loader from './Loader'
-import NoResultCard from './NoResultCard'
-import NewsList from './NewsList'
 
 const STATUS = {
+	IDLE: 'IDLE',
 	PENDING: 'PENDING',
 	FULFILLED: 'FULFILLED',
 	REJECTED: 'REJECTED',
-	IDLE: 'IDLE',
 }
 
 class ContentInfo extends Component {
-	state = { news: null, error: '', status: STATUS.IDLE }
+	state = { articles: null, error: '', status: STATUS.IDLE }
 
-	async componentDidUpdate(prevProps) {
-		if (prevProps.searchText !== this.props.searchText) {
-			try {
-				this.setState({ status: STATUS.PENDING })
-				const { articles, status, message } = await getSearchNews(
-					this.props.searchText
-				)
-				if (status === 'ok') {
-					return this.setState({
-						news: articles,
-						status: STATUS.FULFILLED,
-					})
-				}
-				throw new Error(message)
-			} catch (error) {
-				this.setState({ error: error.message, status: STATUS.REJECTED })
-			}
+	componentDidUpdate(prevProps, prevState) {
+		const text = this.props.searchText.trim()
+		if (prevProps.searchText !== text && text) {
+			this.setState({ status: STATUS.PENDING })
+			getSearchNews(text)
+				.then((data) => {
+					if (data.articles)
+						return this.setState({
+							articles: data.articles,
+							status: STATUS.FULFILLED,
+						})
+					return Promise.reject(data.message)
+				})
+				.catch((error) => {
+					this.setState({ error, status: STATUS.REJECTED })
+				})
 		}
 	}
 	render() {
-		const { error, news, status } = this.state
-		const { PENDING, FULFILLED, REJECTED } = STATUS
+		const { articles, error, status } = this.state
 
-		if (status === PENDING) return <Loader />
-		else if (status === FULFILLED)
-			return news.length > 0 ? <NewsList news={news} /> : <NoResultCard />
-		else if (status === REJECTED) return <ErrorCard error={error} />
+		if (status === STATUS.PENDING) return <Loader />
+		else if (status === STATUS.FULFILLED) {
+			if (articles.length === 0)
+				return (
+					<div className='alert alert-warning mt-3' role='alert'>
+						No Result
+					</div>
+				)
+			return (
+				<ul className='list-group mt-3'>
+					{articles.map((el) => (
+						<li key={el.title} className='list-group-item'>
+							{el.title}
+						</li>
+					))}
+				</ul>
+			)
+		} else if (status === STATUS.REJECTED)
+			return (
+				<div className='alert alert-danger mt-3' role='alert'>
+					{error}
+				</div>
+			)
 	}
-	// render() {
-	// 	const { error, news, status } = this.state
-
-	// 	if (status === 'pending') {
-	// 		return (
-	// 			<Loader/>
-	// 		)
-	// 	} else if (status === 'fulfilled') {
-	// 		return news.length > 0 ? (
-	// 			<NewsList news={news}/>
-	// 		) : (
-	// 			<NoResultCard/>
-	// 		)
-	// 	} else if (status === 'rejected') {
-	// 		return (
-	// 			<ErrorCard error={error}/>
-	// 		)
-	// 	}
-	// }
 }
 
 export default ContentInfo
 // class ContentInfo extends Component {
-// 	state = { news: null, error: '', isLoading: false }
-// 	async componentDidUpdate(prevProps) {
-// 		if (prevProps.searchText !== this.props.searchText) {
-// 			try {
-// 				this.setState({ isLoading: true })
-// 				const { articles, status, message } = await getSearchNews(
-// 					this.props.searchText
-// 				)
-// 				if (status === 'ok') {
-// 					return this.setState({ news: articles })
-// 				}
-// 				throw new Error(message)
-// 			} catch (error) {
-// 				this.setState({ error: error.message })
-// 			} finally {
-// 				this.setState({ isLoading: false })
-// 			}
+// 	state = { articles: null, error: '', isLoading: false }
+
+// 	componentDidUpdate(prevProps, prevState) {
+// 		const text = this.props.searchText.trim()
+// 		if (prevProps.searchText !== text && text) {
+// 			this.setState({ isLoading: true })
+// 			getSearchNews(text)
+// 				.then((data) => {
+// 					if (data.articles)
+// 						return this.setState({
+// 							articles: data.articles,
+// 						})
+// 					return Promise.reject(data.message)
+// 				})
+// 				.catch((error) => {
+// 					this.setState({ error })
+// 				})
+// 				.finally(() => {
+// 					this.setState({ isLoading: false })
+// 				})
 // 		}
 // 	}
-// 	// componentDidUpdate(prevProps) {
-// 	// 	if (prevProps.searchText !== this.props.searchText) {
-// 	// 		getSearchNews(this.props.searchText).then((data) =>
-// 	// 			this.setState({ news: data.articles })
-// 	// 		)
-// 	// 	}
-// 	// }
 // 	render() {
-// 		const { error, news, isLoading } = this.state
+// 		const { articles, error, isLoading } = this.state
 // 		return (
 // 			<>
 // 				{isLoading && (
@@ -106,19 +97,19 @@ export default ContentInfo
 // 						{error}
 // 					</div>
 // 				)}
-// 				{news?.length === 0 && (
-// 					<div className='alert alert-warning mt-3' role='alert'>
-// 						No results!
-// 					</div>
-// 				)}
-// 				{news?.length > 0 && (
+// 				{articles?.length > 0 && (
 // 					<ul className='list-group mt-3'>
-// 						{news.map((el) => (
-// 							<li key={el.url} className='list-group-item'>
+// 						{articles.map((el) => (
+// 							<li key={el.title} className='list-group-item'>
 // 								{el.title}
 // 							</li>
 // 						))}
 // 					</ul>
+// 				)}
+// 				{articles?.length === 0 && (
+// 					<div className='alert alert-warning mt-3' role='alert'>
+// 						No Result
+// 					</div>
 // 				)}
 // 			</>
 // 		)

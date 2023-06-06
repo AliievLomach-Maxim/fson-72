@@ -2,6 +2,7 @@ import { createContext, useContext, useState } from 'react'
 
 const ToggleContext = createContext()
 
+// export const useCustomContext = () => {return useContext(ToggleContext)}
 export const useCustomContext = () => useContext(ToggleContext)
 
 const Context = ({ children }) => {
@@ -11,7 +12,7 @@ const Context = ({ children }) => {
 		<ToggleContext.Provider
 			value={{
 				toggleValue: toggle,
-				toggleFn: () => setToggle((prev) => !prev),
+				setToggleFn: () => setToggle((prev) => !prev),
 			}}
 		>
 			{children}

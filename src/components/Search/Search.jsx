@@ -1,9 +1,16 @@
 import { Component } from 'react'
 
 class Search extends Component {
-	state = { value: '' }
-
-	handleChange = ({ target: { value } }) => this.setState({ value })
+	state = {
+		value: '',
+	}
+	// handleChange = ({ target: { value } }) => {
+	// 	this.setState({ value })
+	// }
+	handleChange = ({ target: { value } }) => {
+		// const { value } = target
+		this.setState({ value })
+	}
 
 	handleSubmit = (e) => {
 		e.preventDefault()

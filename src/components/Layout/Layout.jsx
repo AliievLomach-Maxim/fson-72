@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import React, { Suspense, useState } from 'react'
 import Header from '../Header/Header'
+import { Outlet } from 'react-router-dom'
 import Modal from '../Modal/Modal'
 import FormLogin from '../FormLogin/FormLogin'
 
@@ -10,6 +10,7 @@ const Layout = () => {
 	const openModal = () => setIsShowModal(true)
 
 	const closeModal = () => setIsShowModal(false)
+
 	const createUser = (data) => {
 		const newUser = {
 			...data,
@@ -18,15 +19,15 @@ const Layout = () => {
 		}
 		console.log(newUser)
 	}
-
 	return (
 		<div className='container'>
 			<Header open={openModal} />
-			<Outlet />
+			<Suspense>
+				<Outlet />
+			</Suspense>
 			{isShowModal && (
 				<Modal close={closeModal}>
 					<FormLogin close={closeModal} createUser={createUser} />
-					{/* Hello */}
 				</Modal>
 			)}
 		</div>
