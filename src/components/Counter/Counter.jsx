@@ -1,16 +1,21 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { decrementAction, incrementAction } from '../../store/counter/actions'
+// import { decrementAction, incrementAction } from '../../store/counter/actions'
+import { counterSelector } from '../../store/counter/selectors'
+import { decrement, increment } from '../../store/counterWithSlice/counterSlice'
 
 const Counter = () => {
-	const { total, step } = useSelector((state) => state.counter)
+	const { total, step } = useSelector(counterSelector)
+	// const { total, step } = useSelector((state) => {
+	// 	return [...state].sort((a, b) => a - b)
+	// })
 	const dispatch = useDispatch()
 
 	const handleClickIncrement = () => {
-		dispatch(incrementAction(step))
+		dispatch(increment(step))
 	}
 
 	const handleClickDecrement = () => {
-		dispatch(decrementAction(step))
+		dispatch(decrement(step))
 	}
 
 	return (

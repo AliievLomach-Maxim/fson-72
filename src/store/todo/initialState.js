@@ -1,1 +1,1 @@
-export const initialState = { todo: [], users: null }
+export const initialState = { todoList: [] }
