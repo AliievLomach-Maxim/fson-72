@@ -7,81 +7,90 @@ import React from 'react'
 import FormCreate from './FormCreate'
 import FormFilter from './FormFilter'
 import { useSearchParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { createTodoAction } from '../../store/todo/actions'
+import { create } from '../../store/todo/todoSlice'
 
 const ToDoList = () => {
-	const [todoList, setTodoList] = useState([])
-	const [filteredList, setFilteredList] = useState(null)
-	const [isCreated, setIsCreated] = useState(false)
-	const [isDeleted, setIsDeleted] = useState(false)
-	const [searchParams, setSearchParams] = useSearchParams()
+	// const [todoList, setTodoList] = useState([])
+	// const [filteredList, setFilteredList] = useState(null)
+	// const [isCreated, setIsCreated] = useState(false)
+	// const [isDeleted, setIsDeleted] = useState(false)
+	// const [searchParams, setSearchParams] = useSearchParams()
 
-	const { filter } = useMemo(
-		() => Object.fromEntries([...searchParams]),
-		[searchParams]
-	)
+	const { todoList } = useSelector((state) => state.todo)
 
-	useEffect(() => {
-		const localData = localStorage.getItem('todo')
-		if (localData) {
-			setTodoList(JSON.parse(localData))
-		}
-	}, [])
+	// const { filter } = useMemo(
+	// 	() => Object.fromEntries([...searchParams]),
+	// 	[searchParams]
+	// )
 
-	useEffect(() => {
-		localStorage.setItem('todo', JSON.stringify(todoList))
-	}, [todoList])
+	// useEffect(() => {
+	// 	const localData = localStorage.getItem('todo')
+	// 	if (localData) {
+	// 		setTodoList(JSON.parse(localData))
+	// 	}
+	// }, [])
 
-	useEffect(() => {
-		!filter && setSearchParams({})
-	}, [filter, setSearchParams])
+	// useEffect(() => {
+	// 	localStorage.setItem('todo', JSON.stringify(todoList))
+	// }, [todoList])
 
-	useEffect(() => {
-		todoList.length &&
-			setFilteredList(
-				todoList.filter((todo) =>
-					todo.title
-						.toLowerCase()
-						.includes(filter ? filter.toLowerCase() : '')
-				)
-			)
-	}, [filter, todoList])
+	// useEffect(() => {
+	// 	!filter && setSearchParams({})
+	// }, [filter, setSearchParams])
 
-	const handleCheck = (id) => {
-		setTodoList((prev) => {
-			return prev.map((el) =>
-				el.id === id ? { ...el, completed: !el.completed } : el
-			)
-		})
-	}
+	// useEffect(() => {
+	// 	todoList.length &&
+	// 		setFilteredList(
+	// 			todoList.filter((todo) =>
+	// 				todo.title
+	// 					.toLowerCase()
+	// 					.includes(filter ? filter.toLowerCase() : '')
+	// 			)
+	// 		)
+	// }, [filter, todoList])
+
+	// const handleCheck = (id) => {
+	// 	setTodoList((prev) => {
+	// 		return prev.map((el) =>
+	// 			el.id === id ? { ...el, completed: !el.completed } : el
+	// 		)
+	// 	})
+	// }
+
+	const dispatch = useDispatch()
 
 	const submit = (nameTodo) => {
-		setTodoList((prev) => {
-			return [
-				...prev,
-				{
-					id: nanoid(),
-					title: nameTodo,
-					completed: false,
-				},
-			]
-		})
-		setIsCreated(true)
-		setTimeout(() => {
-			setIsCreated(false)
-		}, 1500)
+		// dispatch(createTodoAction(nameTodo))
+		dispatch(create(nameTodo))
+		// setTodoList((prev) => {
+		// 	return [
+		// 		...prev,
+		// 		{
+		// 			id: nanoid(),
+		// 			title: nameTodo,
+		// 			completed: false,
+		// 		},
+		// 	]
+		// })
+		// setIsCreated(true)
+		// setTimeout(() => {
+		// 	setIsCreated(false)
+		// }, 1500)
 	}
 
-	const handleDelete = (id) => {
-		setTodoList((prev) => prev.filter((el) => el.id !== id))
-		setIsDeleted(true)
-		setTimeout(() => {
-			setIsDeleted(false)
-		}, 1500)
-	}
+	// const handleDelete = (id) => {
+	// 	setTodoList((prev) => prev.filter((el) => el.id !== id))
+	// 	setIsDeleted(true)
+	// 	setTimeout(() => {
+	// 		setIsDeleted(false)
+	// 	}, 1500)
+	// }
 
 	return (
 		<>
-			{isCreated && (
+			{/* {isCreated && (
 				<div className='alert alert-primary' role='alert'>
 					Created to-do successfully!
 				</div>
@@ -90,16 +99,16 @@ const ToDoList = () => {
 				<div className='alert alert-danger' role='alert'>
 					Deleted to-do successfully!
 				</div>
-			)}
-			<FormFilter filter={filter} setSearchParams={setSearchParams} />
+			)} */}
+			{/* <FormFilter filter={filter} setSearchParams={setSearchParams} /> */}
 			<FormCreate submit={submit} />
 			<h1>My To-Do list</h1>
-			{filteredList?.length > 0 && (
+			{todoList?.length > 0 && (
 				<ul className='list-group list-group-flush'>
-					{filteredList.map((todo) => (
+					{todoList.map((todo) => (
 						<ToDo
-							handleDelete={handleDelete}
-							check={handleCheck}
+							// handleDelete={handleDelete}
+							// check={handleCheck}
 							key={todo.id}
 							todo={todo}
 						/>

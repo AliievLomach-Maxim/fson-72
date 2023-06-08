@@ -194,3 +194,21 @@
 
 -   initialState
 -   combineReducer
+
+### Less 2
+
+-   redux-devtools
+-   redux-toolkit
+-   createAction
+-   createReducer
+    -   action.toString()
+-   configureStore
+-   combineReducer not use at the top level
+-   selectors
+
+-   redux persist
+    -   combineReducer
+    -   serializableCheck
+    -   create persist for one state
+    -   persist back object
+    -   whitelist

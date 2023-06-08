@@ -1,33 +1,41 @@
-import { createStore } from 'redux'
+import { configureStore } from '@reduxjs/toolkit'
 import { reducer } from './reducer'
 
-export const store = createStore(reducer)
+import {
+	persistStore,
+	FLUSH,
+	REHYDRATE,
+	PAUSE,
+	PERSIST,
+	PURGE,
+	REGISTER,
+} from 'redux-persist'
+// import storage from 'redux-persist/lib/storage'
 
-// import { createStore } from 'redux'
-
-// const reducer = (state, action) => {
-// 	if (action.type === 'increment') {
-// 		return { ...state, total: state.total + action.payload }
-// 	}
-// 	if (action.type === 'decrement') {
-// 		return { ...state, total: state.total - action.payload }
-// 	}
-// 	if (action.type === 'setStep') {
-// 		return { ...state, step: action.payload }
-// 	}
-// 	if (action.type === 'createTodo') {
-// 		return { ...state}
-// 	}
-// 	if (action.type === 'updateTodo') {
-// 		return { ...state}
-// 	}
-
-// 	return state
+// const persistConfig = {
+// 	key: 'todo',
+// 	storage,
+// 	blacklist: ['counter'],
 // }
 
-// export const store = createStore(reducer, {
-// 	total: 0,
-// 	todo: [],
-// 	users: null,
-// 	step: 1,
-// })
+// const persistedReducer = persistReducer(persistConfig, reducer)
+
+export const store = configureStore({
+	reducer,
+	middleware: (getDefaultMiddleware) =>
+		getDefaultMiddleware({
+			serializableCheck: {
+				ignoredActions: [
+					FLUSH,
+					REHYDRATE,
+					PAUSE,
+					PERSIST,
+					PURGE,
+					REGISTER,
+				],
+			},
+		}),
+})
+// export const store = configureStore({ reducer: persistedReducer })
+
+export const persistor = persistStore(store)

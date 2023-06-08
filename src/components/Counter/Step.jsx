@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { setStepAction } from '../../store/counter/actions'
+// import { setStepAction } from '../../store/counter/actions'
+import { setStep } from '../../store/counterWithSlice/counterSlice'
 
 const Step = () => {
 	const { step } = useSelector((state) => state.counter)
@@ -8,7 +9,7 @@ const Step = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault()
 		const { value } = e.target.elements.step
-		dispatch(setStepAction(value))
+		dispatch(setStep(value))
 	}
 
 	return (
