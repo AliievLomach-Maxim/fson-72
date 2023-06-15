@@ -1,48 +1,55 @@
-import React, { useEffect, useState } from 'react'
-import { getProducts } from '../../api/products'
+import React, { useEffect, useMemo, useState } from 'react'
 import Loader from '../ContentInfo/Loader'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getProductsThunk } from '../../store/products/productsSlice'
+import { getProductsThunk } from '../../store/products/thunks'
+import {
+	selectProducts,
+	selectSortedProducts,
+} from '../../store/products/selectors'
+import {
+	useGetProductsQuery,
+	useDeleteProductMutation,
+	useCreatePostMutation,
+} from '../../store/productsApi'
 
 const Products = () => {
-	// const [products, setProducts] = useState(null)
-	// const [isLoading, setIsLoading] = useState(false)
-	const { products, isLoading, error } = useSelector(
-		(state) => state.products
-	)
+	const { data: products, isLoading, error, refetch } = useGetProductsQuery()
 
-	const dispatch = useDispatch()
+	const [deleteProduct, { isLoading: isLoadingDelete, error: errorDelete }] =
+		useDeleteProductMutation()
 
-	useEffect(() => {
-		dispatch(getProductsThunk())
-	}, [dispatch])
+	const [create, data] = useCreatePostMutation()
+	// const { isLoading, error } = useSelector(selectProducts)
+	// const sortedProducts = useSelector(selectSortedProducts)
+
+	// const [count, setCount] = useState(0)
+
+	// const dispatch = useDispatch()
 
 	// useEffect(() => {
-	// 	const getData = async () => {
-	// 		try {
-	// 			setIsLoading(true)
-	// 			const data = await getProducts()
-	// 			console.log('data :>> ', data)
-	// 			setProducts(data)
-	// 			setIsLoading(false)
-	// 		} catch (error) {
-	// 			console.log('error :>> ', error)
-	// 			setIsLoading(false)
-	// 		}
-	// 	}
-	// 	getData()
-	// }, [])
-
+	// 	dispatch(getProductsThunk())
+	// }, [dispatch])
+	const handleClick = (id) => {
+		deleteProduct(id)
+		// refetch()
+	}
 	return (
 		<>
+			{isLoadingDelete && <h2>Deleting...</h2>}
 			{error && <h2>{error}</h2>}
 			{isLoading && <Loader />}
+			<button onClick={() => create({ title: 'asd' })}>create</button>
 			<ul>
 				{products &&
-					products.map(({ id, title }) => (
+					products.map(({ id, title, price }) => (
 						<li key={id}>
-							<Link to={id.toString()}>{title}</Link>
+							<Link to={id.toString()}>
+								{title} {price}$
+							</Link>
+							<button onClick={() => handleClick(id)}>
+								delete
+							</button>
 						</li>
 					))}
 			</ul>
