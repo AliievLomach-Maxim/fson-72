@@ -6,6 +6,8 @@ import Layout from './Layout/Layout'
 import LoginPage from './pages/LoginPage'
 import SignUpPage from './pages/SignUpPage'
 import { Toaster } from 'react-hot-toast'
+import PrivateRoute from './PrivateRoute/PrivateRoute'
+import PublicRoute from './PublicRoute/PublicRoute'
 // import TodoPage from './pages/TodoPage/TodoPage'
 // import TodoDetails from './pages/TodoPage/TodoDetails'
 // import ProductsPage from './pages/Products/ProductsPage'
@@ -24,12 +26,33 @@ const App = () => {
 				<Route path='/' element={<Layout />}>
 					<Route index element={<HomePage />} />
 					<Route path='news' element={<NewsPage />} />
-					<Route path='todo' element={<TodoPage />} />
-					<Route path='todo/:todoId' element={<TodoDetails />} />
+					<Route
+						path='todo'
+						element={
+							<PrivateRoute>
+								<TodoPage />
+							</PrivateRoute>
+						}
+					/>
+					<Route
+						path='todo/:todoId'
+						element={
+							<PrivateRoute>
+								<TodoDetails />
+							</PrivateRoute>
+						}
+					/>
 					{/* <Route path='todo' element={<TodoPage />}>
 					<Route path=':todoId' element={<TodoDetails />} />
 				</Route> */}
-					<Route path='products' element={<ProductsPage />} />
+					<Route
+						path='products'
+						element={
+							<PrivateRoute>
+								<ProductsPage />
+							</PrivateRoute>
+						}
+					/>
 					<Route
 						path='products/:id'
 						element={
@@ -39,8 +62,22 @@ const App = () => {
 						}
 					/>
 				</Route>
-				<Route path='/login' element={<LoginPage />} />
-				<Route path='/signUp' element={<SignUpPage />} />
+				<Route
+					path='/login'
+					element={
+						<PublicRoute>
+							<LoginPage />
+						</PublicRoute>
+					}
+				/>
+				<Route
+					path='/signUp'
+					element={
+						<PublicRoute>
+							<SignUpPage />
+						</PublicRoute>
+					}
+				/>
 			</Routes>
 		</>
 	)

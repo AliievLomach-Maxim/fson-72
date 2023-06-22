@@ -4,8 +4,8 @@ const instance = axios.create({
 	baseURL: 'https://api.escuelajs.co/api/v1/',
 })
 
-const setToken = (token) => {
-	instance.defaults.headers.common['Authorization'] = token
+export const setToken = (token) => {
+	instance.defaults.headers.common['Authorization'] = `Bearer ${token}`
 }
 
 export const dellToken = () => {
@@ -18,7 +18,7 @@ export const signUp = async (body) => {
 
 export const login = async (body) => {
 	const { data } = await instance.post('/auth/login', body)
-	if ('access_token' in data) setToken(`Bearer ${data.access_token}`)
+	if ('access_token' in data) setToken(data.access_token)
 	return data
 }
 
